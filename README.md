@@ -8,6 +8,9 @@ several commentaries explanning the steps inside functions and files.
 ## How to run flask
 
 In order to run the project through bash terminal:
-> $ export FLASK_APP=flaskr
+
+> $ export FLASK_APP=flaskr 
+> 
 > $ export FLASK_ENV=development
+> 
 > $ flask run
