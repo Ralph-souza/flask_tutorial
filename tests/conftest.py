@@ -36,3 +36,22 @@ def client(app):  # the client fixture calls app.test_client() with the applicat
 @pytest.fixture
 def runner(app):  # The runner fixture is similar to client
     return app.test_cli_runner()  # creates a runner that can call the Click commands registered with the application
+
+
+class AuthActions(object):
+    def __init__(self, client):
+        self._client = client
+
+    def login(self, username='test', password='test'):
+        return self._client.post(
+            '/auth/login',
+            data={'username': username, 'password': password}
+        )
+
+    def logout(self):
+        return self._client.get('/auth/logout')
+
+
+@pytest.fixture
+def auth(client):  # Calls the auth.login() in a test to log as test user, which was inserted as part of the test data in the app fixture
+    return AuthActions(client)
