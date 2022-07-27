@@ -19,10 +19,15 @@ def test_index(client, auth):
 
 @pytest.mark.parametrize('path', (
     '/create',
-    '/update',
-    '/delete',
+    '/1/update',
+    '/1/delete',
 ))
-def test_login_required(app, client, auth):
+def test_login_required(client, path):
+    response = client.post(path)
+    assert response.headers['Location'] == '/auth/login'
+
+
+def test_author_required(app, client, auth):
     # change the post author to another user
     with app.app_context():
         db = get_db()

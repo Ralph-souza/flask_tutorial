@@ -11,10 +11,12 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 @pytest.fixture
 def app():
-    db_fd, db_path = tempfile.mkstemp()  # creates and open a temporary file, returning the file descriptor and the path to it
+    db_fd, db_path = tempfile.mkstemp()
+    # creates and open a temporary file, returning the file descriptor and the path to it
 
     app = create_app({
-        'TESTING': True,  # tells Flask that the app is in test mode
+        'TESTING': True,
+        # tells Flask that the app is in test mode
         'DATABASE': db_path,
     })
 
@@ -29,13 +31,17 @@ def app():
 
 
 @pytest.fixture
-def client(app):  # the client fixture calls app.test_client() with the application object created by the app fixture
-    return app.test_client()  # Tests will use the client to make requests to the application without running the server
+def client(app):
+    # the client fixture calls app.test_client() with the application object created by the app fixture
+    return app.test_client()
+    # Tests will use the client to make requests to the application without running the server
 
 
 @pytest.fixture
-def runner(app):  # The runner fixture is similar to client
-    return app.test_cli_runner()  # creates a runner that can call the Click commands registered with the application
+def runner(app):
+    # The runner fixture is similar to client
+    return app.test_cli_runner()
+    # creates a runner that can call the Click commands registered with the application
 
 
 class AuthActions(object):
@@ -53,5 +59,6 @@ class AuthActions(object):
 
 
 @pytest.fixture
-def auth(client):  # Calls the auth.login() in a test to log as test user, which was inserted as part of the test data in the app fixture
+def auth(client):
+    # Calls the auth.login() in a test to log as test user, which was inserted as part of the test data in the app fixture
     return AuthActions(client)
